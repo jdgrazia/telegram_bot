@@ -31,19 +31,24 @@ def send_to_all(message):
 
     
 def write_id(id, type):
-    with open("id.csv", "r") as fp:
-        rd = csv.reader(fp, delimiter=",")
-        for row in rd:
-            if id == row[1]:
-                return
-    if type == 'group':
+    fname = "id.csv"
+    ldlist=[]
+    if os.path.isfile(fname):
+        with open("id.csv", "r") as fp:
+            rd = csv.reader(fp, delimiter=",")
+            for row in rd:
+                if id == row[1]:
+                    return
+    if type == 'groupid':
         global grouplist
         grouplist.append(id)
         idlist = ['groupid',id]
-    if type == 'bot':
+    if type == 'botid':
+        global botlist
         botlist.append(id)
         idlist = ['botid', id]
     if type == 'userid':
+        global userlist
         userlist.append(id)
         idlist = ['userid:', id]
     with open("id.csv", "a") as fp:
@@ -57,7 +62,7 @@ def read_ids():
 
     
     with open("id.csv","r") as fp:
-        rd = csv.reader(fp, delimeter=",")
+        rd = csv.reader(fp, delimiter =",")
         for row in rd:
             if(row[0] == "groupid"):
                 global grouplist
